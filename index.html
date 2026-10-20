@@ -1,23 +1,457 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>yyant.com</title>
-    <style>
-        body { font-family: -apple-system, "Segoe UI", sans-serif; display: flex;
-               min-height: 100vh; align-items: center; justify-content: center;
-               margin: 0; background: #f5f5f5; color: #333; }
-        .card { background: #fff; padding: 3rem 4rem; border-radius: 12px;
-                box-shadow: 0 4px 16px rgba(0,0,0,.08); text-align: center; }
-        h1 { margin: 0 0 .5rem; font-size: 1.6rem; }
-        p { margin: 0; color: #888; }
-    </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>YY 软件站 — 精选 YY 相关工具与客户端</title>
+<meta name="keywords" content="YY,YY语音,YY软件,YY客户端,YY助手">
+<meta name="description" content="YY 软件站，收录 YY 相关的客户端、辅助工具与常用资源，安全下载、简洁高效。">
+<link href="https://apps.bdimg.com/libs/bootstrap/3.3.4/css/bootstrap.min.css" rel="stylesheet">
+<link href="https://apps.bdimg.com/libs/fontawesome/4.4.0/css/font-awesome.min.css" rel="stylesheet">
+<style>
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Microsoft YaHei", sans-serif;
+    color: #1c1f23;
+    background: #fff;
+    -webkit-font-smoothing: antialiased;
+    letter-spacing: .2px;
+  }
+  a { color: #1c1f23; text-decoration: none; transition: color .2s ease; }
+  a:hover, a:focus { color: #e4572e; text-decoration: none; }
+  ::selection { background: #1c1f23; color: #fff; }
+
+  /* ---------- 导航 ---------- */
+  .navbar-yy {
+    background: rgba(255,255,255,.88);
+    border: 0; border-bottom: 1px solid transparent;
+    margin-bottom: 0;
+    transition: all .25s ease;
+  }
+  .navbar-yy.is-sticky {
+    border-bottom-color: #ededed;
+    box-shadow: 0 1px 12px rgba(0,0,0,.04);
+    -webkit-backdrop-filter: saturate(180%) blur(8px);
+    backdrop-filter: saturate(180%) blur(8px);
+  }
+  .navbar-yy .navbar-brand {
+    font-weight: 700; font-size: 17px; letter-spacing: 1px; color: #1c1f23;
+    display: flex; align-items: center; height: 60px; padding-top: 0; padding-bottom: 0;
+  }
+  .navbar-yy .navbar-brand .mark {
+    width: 28px; height: 28px; line-height: 28px; text-align: center;
+    background: #1c1f23; color: #fff; border-radius: 8px;
+    font-size: 12px; margin-right: 9px;
+  }
+  .navbar-yy .nav > li > a {
+    font-size: 14px; color: #666; padding: 20px 15px; position: relative;
+  }
+  .navbar-yy .nav > li > a:hover,
+  .navbar-yy .nav > li.active > a { color: #1c1f23; background: transparent; }
+  .navbar-yy .nav > li > a::after {
+    content: ""; position: absolute; left: 15px; right: 15px; bottom: 14px;
+    height: 1px; background: #1c1f23; transform: scaleX(0); transform-origin: left;
+    transition: transform .25s ease;
+  }
+  .navbar-yy .nav > li > a:hover::after,
+  .navbar-yy .nav > li.active > a::after { transform: scaleX(1); }
+  .navbar-yy .navbar-toggle { border-color: #ddd; margin-top: 13px; }
+  .navbar-yy .navbar-toggle .icon-bar { background: #1c1f23; }
+
+  /* ---------- Hero ---------- */
+  .hero {
+    position: relative; overflow: hidden;
+    padding: 120px 0 96px; text-align: center;
+    background:
+      radial-gradient(900px 380px at 50% -10%, #f4f6f8 0%, rgba(244,246,248,0) 70%),
+      linear-gradient(180deg, #fbfcfd 0%, #ffffff 100%);
+    border-bottom: 1px solid #f0f0f0;
+  }
+  .hero .badge-pill {
+    display: inline-block; padding: 5px 14px; margin-bottom: 26px;
+    border: 1px solid #e6e8ea; border-radius: 999px; background: #fff;
+    font-size: 12px; color: #8a9099; letter-spacing: .5px;
+  }
+  .hero h1 {
+    font-size: 42px; font-weight: 700; letter-spacing: 1px;
+    margin: 0 0 18px; line-height: 1.35;
+  }
+  .hero h1 em { font-style: normal; color: #e4572e; }
+  .hero .sub {
+    color: #8a9099; font-size: 15.5px; line-height: 1.9;
+    max-width: 620px; margin: 0 auto 34px;
+  }
+  .hero .btn { border-radius: 999px; padding: 11px 30px; font-size: 14px; margin: 0 6px; }
+  .btn-dark { background: #1c1f23; color: #fff; border: 1px solid #1c1f23; }
+  .btn-dark:hover, .btn-dark:focus { background: #000; border-color: #000; color: #fff; }
+  .btn-line { background: #fff; color: #1c1f23; border: 1px solid #e2e5e8; }
+  .btn-line:hover, .btn-line:focus { border-color: #1c1f23; color: #1c1f23; }
+
+  /* 数据条 */
+  .stats { padding: 30px 0; border-bottom: 1px solid #f0f0f0; background: #fff; }
+  .stats .item { text-align: center; }
+  .stats .num { font-size: 24px; font-weight: 700; letter-spacing: .5px; }
+  .stats .label { font-size: 12.5px; color: #a0a5ab; margin-top: 4px; }
+
+  /* ---------- 区块 ---------- */
+  .section { padding: 82px 0; }
+  .section + .section { border-top: 1px solid #f0f0f0; }
+  .section-head { text-align: center; margin-bottom: 46px; }
+  .section-head .en {
+    font-size: 11.5px; letter-spacing: 3px; text-transform: uppercase;
+    color: #b6bbc1; margin-bottom: 10px;
+  }
+  .section-head h2 { font-size: 26px; font-weight: 700; margin: 0 0 14px; letter-spacing: .5px; }
+  .section-head .line { width: 34px; height: 2px; background: #1c1f23; margin: 0 auto; }
+  .section-head p { color: #8a9099; font-size: 14px; margin: 16px 0 0; }
+
+  /* ---------- 软件卡片 ---------- */
+  .app-card {
+    display: block; height: 100%; background: #fff;
+    border: 1px solid #ededee; border-radius: 14px;
+    padding: 30px 26px 26px;
+    transition: transform .25s ease, box-shadow .25s ease, border-color .25s ease;
+  }
+  .app-card:hover {
+    transform: translateY(-5px);
+    border-color: #e2e5e8;
+    box-shadow: 0 12px 30px rgba(20,24,30,.07);
+  }
+  .app-card .icon {
+    width: 42px; height: 42px; line-height: 42px; text-align: center;
+    border-radius: 12px; background: #f4f6f8; color: #1c1f23;
+    font-size: 16px; margin-bottom: 18px;
+    transition: background .25s ease, color .25s ease;
+  }
+  .app-card:hover .icon { background: #1c1f23; color: #fff; }
+  .app-card h3 { font-size: 15.5px; font-weight: 600; margin: 0 0 10px; }
+  .app-card p { color: #8a9099; font-size: 13px; line-height: 1.85; margin: 0 0 18px; min-height: 48px; }
+  .app-card .foot {
+    display: flex; align-items: center; justify-content: space-between;
+    padding-top: 14px; border-top: 1px dashed #eee;
+  }
+  .app-card .meta { font-size: 12px; color: #b6bbc1; }
+  .app-card .go { font-size: 12.5px; color: #1c1f23; }
+  .app-card .go .fa { margin-left: 5px; transition: transform .25s ease; }
+  .app-card:hover .go .fa { transform: translateX(3px); }
+
+  /* ---------- 指南 ---------- */
+  .step { text-align: center; padding: 0 14px; position: relative; }
+  .step .num {
+    width: 40px; height: 40px; line-height: 38px; margin: 0 auto 18px;
+    border: 1px solid #e2e5e8; border-radius: 50%;
+    font-size: 13px; font-weight: 600; color: #1c1f23; background: #fff;
+    transition: all .25s ease;
+  }
+  .step:hover .num { background: #1c1f23; border-color: #1c1f23; color: #fff; }
+  .step h4 { font-size: 15px; font-weight: 600; margin-bottom: 8px; }
+  .step p { font-size: 13px; color: #8a9099; line-height: 1.9; margin: 0; }
+
+  /* ---------- 关于 ---------- */
+  .about-box {
+    background: #fafbfc; border: 1px solid #f0f1f2; border-radius: 14px;
+    padding: 42px;
+  }
+  .about-box p { color: #6f757c; font-size: 14px; line-height: 2.05; margin: 0 0 16px; }
+  .about-box p:last-child { margin-bottom: 0; }
+  .contact-list { list-style: none; padding: 0; margin: 0; }
+  .contact-list li {
+    display: flex; align-items: flex-start; padding: 12px 0;
+    border-bottom: 1px dashed #e8eaec; font-size: 13.5px; color: #6f757c;
+  }
+  .contact-list li:last-child { border-bottom: 0; }
+  .contact-list .fa { width: 22px; color: #1c1f23; margin-top: 3px; }
+
+  /* ---------- 底部 ---------- */
+  .footer {
+    border-top: 1px solid #f0f0f0; background: #fcfcfd;
+    padding: 46px 0 34px; font-size: 13px; color: #8a9099;
+  }
+  .footer .brand {
+    font-weight: 700; font-size: 15px; color: #1c1f23; margin-bottom: 10px; letter-spacing: 1px;
+  }
+  .footer .desc { font-size: 12.5px; line-height: 1.9; color: #a0a5ab; margin-bottom: 18px; }
+  .footer h5 {
+    font-size: 12px; letter-spacing: 2px; text-transform: uppercase;
+    color: #b6bbc1; margin: 0 0 14px; font-weight: 600;
+  }
+  .footer ul { list-style: none; padding: 0; margin: 0; }
+  .footer ul li { margin-bottom: 9px; }
+  .footer ul a { color: #8a9099; font-size: 13px; }
+  .footer ul a:hover { color: #1c1f23; }
+  .footer .bottom {
+    margin-top: 34px; padding-top: 22px; border-top: 1px solid #f0f0f0;
+    text-align: center; font-size: 12.5px; color: #a0a5ab; line-height: 2.1;
+  }
+  .footer .bottom a { color: #a0a5ab; }
+  .footer .bottom a:hover { color: #1c1f23; }
+  .footer .bottom .dot { margin: 0 8px; color: #dcdfe2; }
+
+  @media (max-width: 991px) {
+    .about-box { padding: 30px 24px; }
+  }
+  @media (max-width: 767px) {
+    .hero { padding: 84px 0 64px; }
+    .hero h1 { font-size: 28px; }
+    .hero .sub { font-size: 14px; }
+    .hero .btn { margin-bottom: 10px; }
+    .section { padding: 56px 0; }
+    .section-head h2 { font-size: 22px; }
+    .stats .item { margin-bottom: 22px; }
+    .footer .col-links { margin-top: 26px; }
+  }
+</style>
 </head>
 <body>
-    <div class="card">
-        <h1>yyant.com</h1>
-        <p>Site initialized by oject.php</p>
+
+<nav class="navbar navbar-yy navbar-fixed-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#nav-main">
+        <span class="sr-only">切换导航</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="#top"><span class="mark">YY</span>软件站</a>
     </div>
+    <div class="collapse navbar-collapse" id="nav-main">
+      <ul class="nav navbar-nav navbar-right">
+        <li class="active"><a href="#top">首页</a></li>
+        <li><a href="#apps">软件下载</a></li>
+        <li><a href="#guide">使用指南</a></li>
+        <li><a href="#about">关于我们</a></li>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+<header class="hero" id="top">
+  <div class="container">
+    <span class="badge-pill">安全 · 纯净 · 持续更新</span>
+    <h1>发现好用的 <em>YY</em> 相关软件</h1>
+    <p class="sub">
+      收录 YY 客户端、直播助手与常用辅助工具，提供清晰的版本说明与获取渠道，
+      让每一次下载都省心、可靠。
+    </p>
+    <p>
+      <a href="#apps" class="btn btn-dark">浏览软件</a>
+      <a href="#about" class="btn btn-line">了解我们</a>
+    </p>
+  </div>
+</header>
+
+<section class="stats">
+  <div class="container">
+    <div class="row">
+      <div class="col-xs-4 col-sm-4 item">
+        <div class="num">6+</div>
+        <div class="label">精选软件</div>
+      </div>
+      <div class="col-xs-4 col-sm-4 item">
+        <div class="num">3</div>
+        <div class="label">支持平台</div>
+      </div>
+      <div class="col-xs-4 col-sm-4 item">
+        <div class="num">100%</div>
+        <div class="label">官方渠道</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="apps">
+  <div class="container">
+    <div class="section-head">
+      <div class="en">Downloads</div>
+      <h2>软件下载</h2>
+      <div class="line"></div>
+      <p>按用途分类整理，标注适用平台与语言，按需选择即可。</p>
+    </div>
+    <div class="row">
+      <div class="col-sm-6 col-md-4">
+        <a class="app-card" href="#">
+          <div class="icon"><i class="fa fa-desktop"></i></div>
+          <h3>YY 语音客户端</h3>
+          <p>多人语音沟通工具，适用于游戏开黑、会议语音与在线互动，稳定低延迟。</p>
+          <div class="foot"><span class="meta">Windows / macOS</span><span class="go">详情<i class="fa fa-angle-right"></i></span></div>
+        </a>
+      </div>
+      <div class="col-sm-6 col-md-4">
+        <a class="app-card" href="#">
+          <div class="icon"><i class="fa fa-mobile"></i></div>
+          <h3>YY 移动端</h3>
+          <p>随时随地加入频道，支持语音房间、消息通知与好友管理。</p>
+          <div class="foot"><span class="meta">Android / iOS</span><span class="go">详情<i class="fa fa-angle-right"></i></span></div>
+        </a>
+      </div>
+      <div class="col-sm-6 col-md-4">
+        <a class="app-card" href="#">
+          <div class="icon"><i class="fa fa-video-camera"></i></div>
+          <h3>YY 直播助手</h3>
+          <p>面向主播的开播工具，提供画面采集、音效管理与频道设置。</p>
+          <div class="foot"><span class="meta">Windows</span><span class="go">详情<i class="fa fa-angle-right"></i></span></div>
+        </a>
+      </div>
+    </div>
+    <div class="row" style="margin-top:24px;">
+      <div class="col-sm-6 col-md-4">
+        <a class="app-card" href="#">
+          <div class="icon"><i class="fa fa-cogs"></i></div>
+          <h3>频道管理工具</h3>
+          <p>批量管理频道成员、权限分配与公告发布，提升运营效率。</p>
+          <div class="foot"><span class="meta">Web</span><span class="go">详情<i class="fa fa-angle-right"></i></span></div>
+        </a>
+      </div>
+      <div class="col-sm-6 col-md-4">
+        <a class="app-card" href="#">
+          <div class="icon"><i class="fa fa-headphones"></i></div>
+          <h3>音频调试工具</h3>
+          <p>麦克风降噪与音量检测，快速定位语音质量问题。</p>
+          <div class="foot"><span class="meta">Windows</span><span class="go">详情<i class="fa fa-angle-right"></i></span></div>
+        </a>
+      </div>
+      <div class="col-sm-6 col-md-4">
+        <a class="app-card" href="#">
+          <div class="icon"><i class="fa fa-shield"></i></div>
+          <h3>安全运行组件</h3>
+          <p>运行环境检测与修复组件，保障客户端正常启动与使用。</p>
+          <div class="foot"><span class="meta">Windows</span><span class="go">详情<i class="fa fa-angle-right"></i></span></div>
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="guide">
+  <div class="container">
+    <div class="section-head">
+      <div class="en">How to use</div>
+      <h2>使用指南</h2>
+      <div class="line"></div>
+      <p>三步完成从选择到使用，新手也能快速上手。</p>
+    </div>
+    <div class="row">
+      <div class="col-sm-4 step">
+        <div class="num">1</div>
+        <h4>选择软件</h4>
+        <p>在下载列表中挑选需要的版本与对应平台。</p>
+      </div>
+      <div class="col-sm-4 step">
+        <div class="num">2</div>
+        <h4>下载安装</h4>
+        <p>按提示完成安装，建议关闭误报拦截以避免中断。</p>
+      </div>
+      <div class="col-sm-4 step">
+        <div class="num">3</div>
+        <h4>开始使用</h4>
+        <p>登录账号即可进入频道语音或开启直播。</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="about">
+  <div class="container">
+    <div class="section-head">
+      <div class="en">About us</div>
+      <h2>关于我们</h2>
+      <div class="line"></div>
+    </div>
+    <div class="about-box">
+      <div class="row">
+        <div class="col-md-7">
+          <p>
+            YY 软件站是一个专注于 YY 相关软件资源的导航与下载站点，
+            致力于为用户提供清晰、可靠、无捆绑的软件获取渠道。
+          </p>
+          <p>
+            本站所收录软件均标注来源、平台与版本信息。
+            我们坚持不提供任何第三方修改版，也不在安装包内附加无关程序；
+            若发现内容存在问题或侵权，欢迎随时反馈，我们将在第一时间处理。
+          </p>
+        </div>
+        <div class="col-md-5">
+          <ul class="contact-list">
+            <li><i class="fa fa-envelope-o"></i><span>联系邮箱：admin@yyant.com</span></li>
+            <li><i class="fa fa-clock-o"></i><span>在线反馈：工作日 9:00 – 18:00</span></li>
+            <li><i class="fa fa-shield"></i><span>本站不提供任何第三方修改版</span></li>
+            <li><i class="fa fa-refresh"></i><span>软件版本定期同步更新</span></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer class="footer">
+  <div class="container">
+    <div class="row">
+      <div class="col-sm-5">
+        <div class="brand">YY 软件站</div>
+        <div class="desc">
+          收录并整理 YY 相关的客户端与辅助工具，<br>提供清晰、可靠的软件获取渠道。
+        </div>
+      </div>
+      <div class="col-sm-3 col-xs-6 col-links">
+        <h5>导航</h5>
+        <ul>
+          <li><a href="#apps">软件下载</a></li>
+          <li><a href="#guide">使用指南</a></li>
+          <li><a href="#about">关于我们</a></li>
+        </ul>
+      </div>
+      <div class="col-sm-4 col-xs-6 col-links">
+        <h5>条款</h5>
+        <ul>
+          <li><a href="#">免责声明</a></li>
+          <li><a href="#">隐私政策</a></li>
+          <li><a href="#">意见反馈</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="bottom">
+      <div>
+        <a href="https://beian.miit.gov.cn/" target="_blank" rel="nofollow">鲁ICP备2024092961号-31</a>
+        <span class="dot">·</span>
+        <a href="http://www.beian.gov.cn/" target="_blank" rel="nofollow">鲁公网安备37130202373077号</a>
+      </div>
+      <div>Copyright &copy; <span id="year">2026</span> yyant.com 保留所有权利</div>
+    </div>
+  </div>
+</footer>
+
+<script src="https://apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js"></script>
+<script src="https://apps.bdimg.com/libs/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+<script>
+  $(function () {
+    $('#year').text(new Date().getFullYear());
+
+    // 固定导航：滚动后显示分割线
+    var $nav = $('.navbar-yy');
+    $(window).on('scroll', function () {
+      $nav.toggleClass('is-sticky', $(window).scrollTop() > 10);
+    }).trigger('scroll');
+
+    // 平滑滚动（兼容固定导航高度）
+    $('a[href^="#"]').on('click', function (e) {
+      var id = $(this).attr('href');
+      if (id === '#' || !$(id).length) return;
+      e.preventDefault();
+      $('html, body').animate({ scrollTop: $(id).offset().top - 60 }, 450);
+      $('.navbar-collapse.in').collapse('hide');
+    });
+
+    // 导航高亮
+    var sections = ['#top', '#apps', '#guide', '#about'];
+    $(window).on('scroll', function () {
+      var pos = $(window).scrollTop() + 120, cur = sections[0];
+      $.each(sections, function (i, s) {
+        if ($(s).length && $(s).offset().top <= pos) cur = s;
+      });
+      $('.navbar-yy .nav > li').removeClass('active')
+        .find('a[href="' + cur + '"]').parent().addClass('active');
+    }).trigger('scroll');
+  });
+</script>
 </body>
 </html>
